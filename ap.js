@@ -1,5 +1,12 @@
 'use strict';
-
+// array to store all busmall images
+BusMallImage.allBusMallImages = [];
+// make constructor for busmall images
+function BusMallImage(filepath, name) {
+  this.filepath = filepath;
+  this.name = name;
+  BusMallImage.allBusMallImages.push(this);
+}
 //display 3 images at a time 
 // I want those 3 images to display side by side by side
 // manage the size and position of the images
