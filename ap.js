@@ -30,9 +30,21 @@ new BusMallImage('img/water-can.jpg', 'Water-Can');
 new BusMallImage('img/wine-glass.jpg', 'Wine-Glass');
 
 // access the img from the DOM
-var imgEl = document.getElementById(BusMallImage.allBusMallImages(section));
+var imgEl = document.getElementsByClassName('allItems');
 
-// make a random number generator
+// eventlistener on the image
+imgEl.addEventListener ('click', randomItem);
+
+// callback function for the event listener to randomly display a goat image
+function randomItem() {
+  // random number generator to return a number betwen 0 and the length of the array (Goat.allGoats)
+  var randomIndex = Math.floor(Math.random() * BusMallImage.allBusMallImages.length + 1);
+
+  // use the random number to display a goat at that random index
+  imgEl.src = Goat.allGoats[randomIndex].filepath;
+}
+// invoke the callback on page load to show a random baby goat
+randomGoat();
 
 //display 3 images at a time 
 // I want those 3 images to display side by side by side
