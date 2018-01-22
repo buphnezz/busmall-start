@@ -29,6 +29,11 @@ new BusMallImage('img/usb.jpg', 'USB');
 new BusMallImage('img/water-can.jpg', 'Water-Can');
 new BusMallImage('img/wine-glass.jpg', 'Wine-Glass');
 
+// access the img from the DOM
+var imgEl = document.getElementById(BusMallImage.allBusMallImages(section));
+
+// make a random number generator
+
 //display 3 images at a time 
 // I want those 3 images to display side by side by side
 // manage the size and position of the images
