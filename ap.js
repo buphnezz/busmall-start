@@ -25,6 +25,7 @@ new BusMallImage('img/shark.jpg', 'Shark');
 new BusMallImage('img/sweep.jpg', 'Sweep');
 new BusMallImage('img/tauntaun.jpg', 'Tauntaun');
 new BusMallImage('img/unicorn.jpg', 'Unicorn');
+new BusMallImage('img/usb.jpg', 'USB');
 new BusMallImage('img/water-can.jpg', 'Water-Can');
 new BusMallImage('img/wine-glass.jpg', 'Wine-Glass');
 
