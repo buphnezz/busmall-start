@@ -82,6 +82,11 @@ function randomItem() {
   middleEl.src = BusMallImage.allBusMallImages[randomMiddle].filepath;
   rightEl.src = BusMallImage.allBusMallImages[randomRight].filepath;
 
+  // increment the number of times each image was shown
+  BusMallImage.allBusMallImages[randomLeft].timesDisplayed += 1;  
+  BusMallImage.allBusMallImages[randomMiddle].timesDisplayed += 1;  
+  BusMallImage.allBusMallImages[randomRight].timesDisplayed += 1;  
+
 
   //APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
   // BusMallImage.lastDisplayed[0] = randomLeft;
