@@ -110,6 +110,8 @@ function randomItem() {
     // to track the total number of clicks
     BusMallImage.totalClicks += 1;
 
+    sectionEl.addEventListener('click', handleClick);
+
     console.log(event.target);
     // count the clicks on a specific image
     // access with our for loop a specific image
@@ -147,7 +149,7 @@ function randomItem() {
 
     // add as many hex colors as I have pictures
     var chartColors = ['#E37222', 'red'];
-
+    // refer to the barChart doc to see where my {} is out of place.
     var busMallChart = new Chart(context, {
       type: 'bar',
       data: {
@@ -167,16 +169,16 @@ function randomItem() {
           }]
           }
         }
-      }
-    })
+      })
+    };
   }
 
-  sectionEl.addEventListener('click', handleClick);
-  //APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
+  // sectionEl.addEventListener('click', handleClick);
+  // APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
   // BusMallImage.lastDisplayed[0] = randomLeft;
   // BusMallImage.lastDisplayed[1] = randomMiddle;
   // BusMallImage.lastDisplayed[2] = randomRight;
-}
+
 
 // imgEl.addEventListener('click', handleClicks)
 // invoke the callback on page load to show a random baby goat
