@@ -83,7 +83,7 @@ function randomItem() {
   rightEl.src = BusMallImage.allBusMallImages[randomRight].filepath;
 
 
-  //APPROACH 2   the pushes just override themselves.
+  //APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
   // BusMallImage.lastDisplayed[0] = randomLeft;
   // BusMallImage.lastDisplayed[1] = randomMiddle;
   // BusMallImage.lastDisplayed[2] = randomRight;
