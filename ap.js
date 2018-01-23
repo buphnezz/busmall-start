@@ -120,7 +120,7 @@ function randomItem() {
   }  
   function showResults() {
     for(var i in BusMallImage.allBusMallImages) {
-      var liEL = document.createElement('li');
+      var liEl = document.createElement('li');
       liEl.textContent = BusMallImage.allBusMallImages[i].name + ' has ' + BusMallImage.allBusMallImages[i].votes + ' votes and was displayed ' + BusMallImage.allBusMallImages[i].timesDisplayed + ' times.';
       ulEl.appendChild(liEl);
     }
@@ -132,7 +132,7 @@ function randomItem() {
   // BusMallImage.lastDisplayed[2] = randomRight;
 }
 
-imgEl.addEventListener('click', handleClicks)
+// imgEl.addEventListener('click', handleClicks)
 // invoke the callback on page load to show a random baby goat
 randomItem();
 
