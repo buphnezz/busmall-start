@@ -5,9 +5,9 @@ BusMallImage.allBusMallImages = [];
 // keep track of all clicks no matter which image was clicked on
 BusMallImage.totalClicks = 0;
 
-BusMallImage.lastDisplayed = 0;
+BusMallImage.lastDisplayed = [];
 
-var sectionEl =  document.getElementById('images');
+var sectionEl = document.getElementById('images');
 
 //access the ul element from the DOM
 var ulEl = document.getElementById('results');
@@ -56,12 +56,6 @@ var leftEl = document.getElementById('itemOnPageOne');
 var middleEl = document.getElementById('itemOnPageTwo');
 var rightEl = document.getElementById('itemOnPageThree');
 
-// eventlistener on the image
-leftEl.addEventListener('click', randomItem);
-middleEl.addEventListener('click', randomItem);
-rightEl.addEventListener('click', randomItem);
-
-
 // callback function for the event listener to randomly display a busmall item
 function randomItem() {
   // random number generator to return a number betwen 0 and the length of the array
@@ -69,26 +63,19 @@ function randomItem() {
   var randomMiddle = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
   var randomRight = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
 
-  // keep track of these three as the previously displayed goats
-  // APPROACH 1   the pushes accumulate and I have to clear them out
-  BusMallImage.lastDisplayed = [];
-  BusMallImage.lastDisplayed.push(randomLeft);
-  BusMallImage.lastDisplayed.push(randomMiddle);
-  BusMallImage.lastDisplayed.push(randomRight);
-
   // before we set the src attribute, we want to make sure the random images are unique
   // check to make sure each random number is unique AND not one of the previously displayed images 
   // if they are the same we need to generate new random numbers
   // condition 1: left and middle are the same
   // condition 2: left and right are the same
   // condition 3: middle and right are the same
-  while(randomLeft === randomMiddle || BusMallImage.lastDisplayed.includes(randomLeft) || randomLeft === randomRight || BusMallImage.lastDisplayed.includes(randomMiddle) || randomMiddle === randomRight ||BusMallImage.lastDisplayed.includes(randomRight)) { 
+  while(randomLeft === randomMiddle || BusMallImage.lastDisplayed.includes(randomLeft) || randomLeft === randomRight || BusMallImage.lastDisplayed.includes(randomMiddle) || randomMiddle === randomRight || BusMallImage.lastDisplayed.includes(randomRight)) {  
     console.log('Duplicate was caught');
     randomLeft = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
     randomMiddle = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
     randomRight = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
   }
-  
+
   // use the random number to display 3 items at that random index
   //display 3 images at a time 
   // manage the size and position of the images
@@ -105,73 +92,92 @@ function randomItem() {
   BusMallImage.allBusMallImages[randomMiddle].timesDisplayed += 1;  
   BusMallImage.allBusMallImages[randomRight].timesDisplayed += 1;  
 
-  // e is the same as event
-  function handleClick(event) {
-    // to track the total number of clicks
-    BusMallImage.totalClicks += 1;
+  // keep track of these three as the previously displayed goats
+  // APPROACH 1   the pushes accumulate and I have to clear them out
+  BusMallImage.lastDisplayed = [];
+  BusMallImage.lastDisplayed.push(randomLeft);
+  BusMallImage.lastDisplayed.push(randomMiddle);
+  BusMallImage.lastDisplayed.push(randomRight);
+//added this one manually!
+}
 
-    sectionEl.addEventListener('click', handleClick);
+// e is the same as event
+function handleClick(event) {
+  // to track the total number of clicks
+  BusMallImage.totalClicks += 1;
+  console.log('a click occurred');
+  
+  // count the clicks on a specific image
+  // access with our for loop a specific image
+  for( var i in BusMallImage.allBusMallImages) {
+    if(event.target.alt === BusMallImage.allBusMallImages[i].name) {
+      BusMallImage.allBusMallImages[i].votes += 1;
+    }
+  }
+  
+  if(BusMallImage.totalClicks > 3) {
+    sectionEl.removeEventListener('click', handleClick);
+    showResults();
+    updateVotes();
+    renderChart();
+  } else {
+    randomItem();
+  }
+} 
 
-    console.log(event.target);
-    // count the clicks on a specific image
-    // access with our for loop a specific image
-    for( var i in BusMallImage.allBusMallImages) {
-      if(event.target.alt === BusMallImage.allBusMallImages[i].name){
-        BusMallImage.allBusMallImages[i].votes += 1;
+function showResults() {
+  for(var i in BusMallImage.allBusMallImages) {
+    var liEl = document.createElement('li');
+    liEl.textContent = BusMallImage.allBusMallImages[i].name + ' has ' + BusMallImage.allBusMallImages[i].votes + ' votes and was displayed ' + BusMallImage.allBusMallImages[i].timesDisplayed + ' times.';
+    ulEl.appendChild(liEl);
+  }
+}
+
+// function to update the number of votes per image
+function updateVotes() {
+  for(var i in BusMallImage.allBusMallImages) {
+    imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
+  }
+}
+
+// function to render the chart on the screen
+function renderChart() {
+  var context = document.getElementById('chart-placeholder').getContext('2d');
+  console.log('found the barchart');
+
+  // add as many hex colors as I have pictures
+  var chartColors = ['#E37222', '#DAF7A6', '#FFC300', '#C70039', '#33FFBD', '#33FF57', '#75FF33', '#DBFF33', '#5733FF', '#8F7A76', '#CF6650'];
+  // refer to the barChart doc to see where my {} is out of place.
+  console.log(imageNames);
+  console.log(imageVotes);  
+  var busMallChart = new Chart(context, {
+    type: 'bar',
+    data: {
+      labels: imageNames,
+      datasets: [{
+        label: 'Votes Per Image',
+        data: imageVotes,
+        backgroundColors: chartColors,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          tick: {
+            beginAtZero: true
+          }
+        }]
       }
     }
-    if(BusMallImage.totalClicks > 24) {
-      sectionEl.removeEventListener('click', handleClick);
-      showResults();
-      updateVotes();
-      renderChart();
-    } else {
-      randomItem();
-    }
-  }  
-  function showResults() {
-    for(var i in BusMallImage.allBusMallImages) {
-      var liEl = document.createElement('li');
-      liEl.textContent = BusMallImage.allBusMallImages[i].name + ' has ' + BusMallImage.allBusMallImages[i].votes + ' votes and was displayed ' + BusMallImage.allBusMallImages[i].timesDisplayed + ' times.';
-      ulEl.appendChild(liEl);
-    }
-  }
+  })
+}
 
-  // function to update the number of votes per image
-  function updateVotes() {
-    for(var i in BusMallImage.allBusMallImages) {
-      imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
-    }
-  }
-  // function to render the chart on the screen
-  function renderChart() {
-    var context = document.getElementById('chart-placeholder').getContext('2d');
+// eventlistener on the image
+// leftEl.addEventListener('click', randomItem);
+// middleEl.addEventListener('click', randomItem);
+// rightEl.addEventListener('click', randomItem);
 
-    // add as many hex colors as I have pictures
-    var chartColors = ['#E37222', 'red'];
-    // refer to the barChart doc to see where my {} is out of place.
-    var busMallChart = new Chart(context, {
-      type: 'bar',
-      data: {
-        labels: imageNames,
-        datasets: [{
-          label: 'Votes Per Image',
-          data: imageVotes,
-          backgroundColors: chartColors,
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            tick: {
-              beginAtZero: true,
-            }
-          }]
-          }
-        }
-      })
-    };
-  }
+  
 
   // sectionEl.addEventListener('click', handleClick);
   // APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
@@ -179,7 +185,7 @@ function randomItem() {
   // BusMallImage.lastDisplayed[1] = randomMiddle;
   // BusMallImage.lastDisplayed[2] = randomRight;
 
-
+sectionEl.addEventListener('click', handleClick);
 // imgEl.addEventListener('click', handleClicks)
 // invoke the callback on page load to show a random baby goat
 randomItem();
