@@ -51,16 +51,42 @@ rightEl.addEventListener('click', randomItem);
 // callback function for the event listener to randomly display a busmall item
 function randomItem() {
   // random number generator to return a number betwen 0 and the length of the array
-  var randomIndex = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
-  var randomIndex2 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
-  var randomIndex3 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+  var randomLeft = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+  var randomMiddle = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+  var randomRight = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+
+  // keep track of these three as the previously displayed goats
+  // APPROACH 1   the pushes accumulate and I have to clear them out
+  BusMallImage.lastDisplayed = [];
+  BusMallImage.lastDisplayed.push(randomLeft);
+  BusMallImage.lastDisplayed.push(randomMiddle);
+  BusMallImage.lastDisplayed.push(randomRight);
+
+  // before we set the src attribute, we want to make sure the random images are unique
+  // check to make sure each random number is unique AND not one of the previously displayed images 
+  // if they are the same we need to generate new random numbers
+  // condition 1: left and middle are the same
+  // condition 2: left and right are the same
+  // condition 3: middle and right are the same
+  while(randomLeft === randomMiddle || BusMallImage.lastDisplayed.includes(randomLeft) || randomLeft === randomRight || BusMallImage.lastDisplayed.includes(randomMiddle) || randomMiddle === randomRight ||BusMallImage.lastDisplayed.includes(randomRight)) { 
+    console.log('Duplicate was caught');
+    randomLeft = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+    randomMiddle = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+    randomRight = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+  }
   
   // use the random number to display 3 items at that random index
   //display 3 images at a time 
   // manage the size and position of the images
-  leftEl.src = BusMallImage.allBusMallImages[randomIndex].filepath;
-  middleEl.src = BusMallImage.allBusMallImages[randomIndex2].filepath;
-  rightEl.src = BusMallImage.allBusMallImages[randomIndex3].filepath;
+  leftEl.src = BusMallImage.allBusMallImages[randomLeft].filepath;
+  middleEl.src = BusMallImage.allBusMallImages[randomMiddle].filepath;
+  rightEl.src = BusMallImage.allBusMallImages[randomRight].filepath;
+
+
+  //APPROACH 2   the pushes just override themselves.
+  // BusMallImage.lastDisplayed[0] = randomLeft;
+  // BusMallImage.lastDisplayed[1] = randomMiddle;
+  // BusMallImage.lastDisplayed[2] = randomRight;
 }
 function handleClicks() {
   for(var i in allBusMallImages) {}
