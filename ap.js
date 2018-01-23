@@ -15,6 +15,9 @@ var ulEl = document.getElementById('results');
 // array to store the names for our chart labels
 var imageNames = [];
 
+// array to store votes per images
+var imageVotes = [];
+
 // make constructor for busmall images
 function BusMallImage(filepath, name) {
   this.filepath = filepath;
@@ -118,9 +121,10 @@ function randomItem() {
     if(BusMallImage.totalClicks > 24) {
       sectionEl.removeEventListener('click', handleClick);
       showResults();
+      updateVotes();
+      renderChart();
     } else {
       randomItem();
-      renderChart();
     }
   }  
   function showResults() {
@@ -131,15 +135,38 @@ function randomItem() {
     }
   }
 
+  // function to update the number of votes per image
+  function updateVotes() {
+    for(var i in BusMallImage.allBusMallImages) {
+      imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
+    }
+  }
   // function to render the chart on the screen
   function renderChart() {
     var context = document.getElementById('chart-placeholder').getContext('2d');
+
+    // add as many hex colors as I have pictures
+    var chartColors = ['#E37222', 'red'];
 
     var busMallChart = new Chart(context, {
       type: 'bar',
       data: {
         labels: imageNames,
-
+        datasets: [{
+          label: 'Votes Per Image',
+          data: imageVotes,
+          backgroundColors: chartColors,
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            tick: {
+              beginAtZero: true,
+            }
+          }]
+          }
+        }
       }
     })
   }
