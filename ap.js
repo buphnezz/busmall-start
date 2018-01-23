@@ -115,7 +115,7 @@ function handleClick(event) {
     }
   }
   
-  if(BusMallImage.totalClicks > 3) {
+  if(BusMallImage.totalClicks > 9) {
     sectionEl.removeEventListener('click', handleClick);
     showResults();
     updateVotes();
@@ -157,7 +157,7 @@ function renderChart() {
       datasets: [{
         label: 'Votes Per Image',
         data: imageVotes,
-        backgroundColors: chartColors,
+        backgroundColor: chartColors,
       }]
     },
     options: {
