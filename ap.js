@@ -1,14 +1,19 @@
 'use strict';
 // array to store all busmall images
 BusMallImage.allBusMallImages = [];
-var clicks = [];
+
+// keep track of all clicks no matter which image was clicked on
+BusMallImage.totalClicks = 0;
+
 // make constructor for busmall images
 function BusMallImage(filepath, name) {
   this.filepath = filepath;
   this.name = name;
-  this.clicks = 0;
+  this.votes = 0;
+  this.timesDisplayed = 0;
   BusMallImage.allBusMallImages.push(this);
 }
+
 
 // display images
 new BusMallImage('img/bag.jpg', 'Bag');
@@ -33,14 +38,15 @@ new BusMallImage('img/water-can.jpg', 'Water-Can');
 new BusMallImage('img/wine-glass.jpg', 'Wine-Glass');
 
 // access the img from the DOM
-var imgEl = document.getElementById('itemOnPageOne');
-var imgEl2 = document.getElementById('itemOnPageTwo');
-var imgEl3 = document.getElementById('itemOnPageThree');
+var leftEl = document.getElementById('itemOnPageOne');
+var middleEl = document.getElementById('itemOnPageTwo');
+var rightEl = document.getElementById('itemOnPageThree');
 
 // eventlistener on the image
-imgEl.addEventListener('click', randomItem);
-imgEl2.addEventListener('click', randomItem);
-imgEl3.addEventListener('click', randomItem);
+leftEl.addEventListener('click', randomItem);
+middleEl.addEventListener('click', randomItem);
+rightEl.addEventListener('click', randomItem);
+
 
 // callback function for the event listener to randomly display a busmall item
 function randomItem() {
@@ -52,11 +58,12 @@ function randomItem() {
   // use the random number to display 3 items at that random index
   //display 3 images at a time 
   // manage the size and position of the images
-  imgEl.src = BusMallImage.allBusMallImages[randomIndex].filepath;
-  imgEl2.src = BusMallImage.allBusMallImages[randomIndex2].filepath;
-  imgEl3.src = BusMallImage.allBusMallImages[randomIndex3].filepath;
+  leftEl.src = BusMallImage.allBusMallImages[randomIndex].filepath;
+  middleEl.src = BusMallImage.allBusMallImages[randomIndex2].filepath;
+  rightEl.src = BusMallImage.allBusMallImages[randomIndex3].filepath;
 }
 function handleClicks() {
+  for(var i in allBusMallImages) {}
   
 
 }
