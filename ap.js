@@ -5,6 +5,13 @@ BusMallImage.allBusMallImages = [];
 // keep track of all clicks no matter which image was clicked on
 BusMallImage.totalClicks = 0;
 
+BusMallImage.lastDisplayed = 0;
+
+var sectionEl =  document.getElementById('images');
+
+//access the ul element from the DOM
+var ulEl = document.getElementById('results');
+
 // make constructor for busmall images
 function BusMallImage(filepath, name) {
   this.filepath = filepath;
@@ -78,25 +85,51 @@ function randomItem() {
   // use the random number to display 3 items at that random index
   //display 3 images at a time 
   // manage the size and position of the images
+  // set the src and alt attributes of the 3 items
   leftEl.src = BusMallImage.allBusMallImages[randomLeft].filepath;
+  leftEl.alt = BusMallImage.allBusMallImages[randomLeft].name;
   middleEl.src = BusMallImage.allBusMallImages[randomMiddle].filepath;
+  middleEl.alt = BusMallImage.allBusMallImages[randomMiddle].name;
   rightEl.src = BusMallImage.allBusMallImages[randomRight].filepath;
+  rightEl.alt = BusMallImage.allBusMallImages[randomRight].name;
 
   // increment the number of times each image was shown
   BusMallImage.allBusMallImages[randomLeft].timesDisplayed += 1;  
   BusMallImage.allBusMallImages[randomMiddle].timesDisplayed += 1;  
   BusMallImage.allBusMallImages[randomRight].timesDisplayed += 1;  
 
+  // e is the same as event
+  function handleClick(event) {
+    // to track the total number of clicks
+    BusMallImage.totalClicks += 1;
 
+    console.log(event.target);
+    // count the clicks on a specific image
+    // access with our for loop a specific image
+    for( var i in BusMallImage.allBusMallImages) {
+      if(event.target.alt === BusMallImage.allBusMallImages[i].name){
+        BusMallImage.allBusMallImages[i].votes += 1;
+      }
+    }
+    if(BusMallImage.totalClicks > 24) {
+      sectionEl.removeEventListener('click', handleClick);
+      showResults();
+    } else {
+      randomItem();
+    }
+  }  
+  function showResults() {
+    for(var i in BusMallImage.allBusMallImages) {
+      var liEL = document.createElement('li');
+      liEl.textContent = BusMallImage.allBusMallImages[i].name + ' has ' + BusMallImage.allBusMallImages[i].votes + ' votes and was displayed ' + BusMallImage.allBusMallImages[i].timesDisplayed + ' times.';
+      ulEl.appendChild(liEl);
+    }
+  }
+  sectionEl.addEventListener('click', handleClick);
   //APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
   // BusMallImage.lastDisplayed[0] = randomLeft;
   // BusMallImage.lastDisplayed[1] = randomMiddle;
   // BusMallImage.lastDisplayed[2] = randomRight;
-}
-function handleClicks() {
-  for(var i in allBusMallImages) {}
-  
-
 }
 
 imgEl.addEventListener('click', handleClicks)
