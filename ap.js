@@ -1,12 +1,15 @@
 'use strict';
 // array to store all busmall images
 BusMallImage.allBusMallImages = [];
+var clicks = [];
 // make constructor for busmall images
 function BusMallImage(filepath, name) {
   this.filepath = filepath;
   this.name = name;
+  this.clicks = 0;
   BusMallImage.allBusMallImages.push(this);
 }
+
 // display images
 new BusMallImage('img/bag.jpg', 'Bag');
 new BusMallImage('img/banana.jpg', 'Banana');
@@ -46,21 +49,23 @@ function randomItem() {
   var randomIndex2 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
   var randomIndex3 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
   
-
   // use the random number to display 3 items at that random index
   //display 3 images at a time 
+  // manage the size and position of the images
   imgEl.src = BusMallImage.allBusMallImages[randomIndex].filepath;
   imgEl2.src = BusMallImage.allBusMallImages[randomIndex2].filepath;
   imgEl3.src = BusMallImage.allBusMallImages[randomIndex3].filepath;
 }
+function handleClicks() {
+  
 
+}
 
+imgEl.addEventListener('click', handleClicks)
 // invoke the callback on page load to show a random baby goat
 randomItem();
 
 
-// I want those 3 images to display side by side by side
-// manage the size and position of the images
 // users should be able to select an image
 // I want to track which image is selected
 // track how many times each image was selected
