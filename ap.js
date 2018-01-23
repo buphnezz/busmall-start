@@ -22,10 +22,10 @@ new BusMallImage('img/pen.jpg', 'Pen');
 new BusMallImage('img/pet-sweep.jpg', 'Pet-Sweep');
 new BusMallImage('img/scissors.jpg', 'Scissors');
 new BusMallImage('img/shark.jpg', 'Shark');
-new BusMallImage('img/sweep.jpg', 'Sweep');
+new BusMallImage('img/sweep.png', 'Sweep');
 new BusMallImage('img/tauntaun.jpg', 'Tauntaun');
 new BusMallImage('img/unicorn.jpg', 'Unicorn');
-new BusMallImage('img/usb.jpg', 'USB');
+new BusMallImage('img/usb.gif', 'USB');
 new BusMallImage('img/water-can.jpg', 'Water-Can');
 new BusMallImage('img/wine-glass.jpg', 'Wine-Glass');
 
@@ -48,6 +48,7 @@ function randomItem() {
   
 
   // use the random number to display 3 items at that random index
+  //display 3 images at a time 
   imgEl.src = BusMallImage.allBusMallImages[randomIndex].filepath;
   imgEl2.src = BusMallImage.allBusMallImages[randomIndex2].filepath;
   imgEl3.src = BusMallImage.allBusMallImages[randomIndex3].filepath;
@@ -57,7 +58,7 @@ function randomItem() {
 // invoke the callback on page load to show a random baby goat
 randomItem();
 
-//display 3 images at a time 
+
 // I want those 3 images to display side by side by side
 // manage the size and position of the images
 // users should be able to select an image
