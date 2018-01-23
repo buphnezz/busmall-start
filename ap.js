@@ -42,9 +42,9 @@ imgEl3.addEventListener('click', randomItem);
 // callback function for the event listener to randomly display a busmall item
 function randomItem() {
   // random number generator to return a number betwen 0 and the length of the array
-  var randomIndex = Math.floor(Math.random() * BusMallImage.allBusMallImages.length + 1);
-  var randomIndex2 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length + 1);
-  var randomIndex3 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length + 1);
+  var randomIndex = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+  var randomIndex2 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
+  var randomIndex3 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
   
 
   // use the random number to display 3 items at that random index
