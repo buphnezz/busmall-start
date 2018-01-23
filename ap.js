@@ -43,10 +43,17 @@ imgEl3.addEventListener('click', randomItem);
 function randomItem() {
   // random number generator to return a number betwen 0 and the length of the array
   var randomIndex = Math.floor(Math.random() * BusMallImage.allBusMallImages.length + 1);
+  var randomIndex2 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length + 1);
+  var randomIndex3 = Math.floor(Math.random() * BusMallImage.allBusMallImages.length + 1);
+  
 
-  // use the random number to display a goat at that random index
+  // use the random number to display 3 items at that random index
   imgEl.src = BusMallImage.allBusMallImages[randomIndex].filepath;
+  imgEl2.src = BusMallImage.allBusMallImages[randomIndex2].filepath;
+  imgEl3.src = BusMallImage.allBusMallImages[randomIndex3].filepath;
 }
+
+
 // invoke the callback on page load to show a random baby goat
 randomItem();
 
