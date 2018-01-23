@@ -115,7 +115,7 @@ function handleClick(event) {
     }
   }
   
-  if(BusMallImage.totalClicks > 9) {
+  if(BusMallImage.totalClicks > 24) {
     sectionEl.removeEventListener('click', handleClick);
     showResults();
     updateVotes();
@@ -146,7 +146,7 @@ function renderChart() {
   console.log('found the barchart');
 
   // add as many hex colors as I have pictures
-  var chartColors = ['#E37222', '#DAF7A6', '#FFC300', '#C70039', '#33FFBD', '#33FF57', '#75FF33', '#DBFF33', '#5733FF', '#8F7A76', '#CF6650'];
+  var chartColors = ['#E37222', '#DAF7A6', '#FFC300', '#C70039', '#33FFBD', '#33FF57', '#75FF33', '#DBFF33', '#5733FF', '#8F7A76', '#CF6650', '#ebf442', '#f44153', '#f207c7', '#d30610', '#71bc16', '#444740', '#1f0fd8', '#7c75ce', '#40a5aa', '#b003c6'];
   // refer to the barChart doc to see where my {} is out of place.
   console.log(imageNames);
   console.log(imageVotes);  
