@@ -12,6 +12,9 @@ var sectionEl =  document.getElementById('images');
 //access the ul element from the DOM
 var ulEl = document.getElementById('results');
 
+// array to store the names for our chart labels
+var imageNames = [];
+
 // make constructor for busmall images
 function BusMallImage(filepath, name) {
   this.filepath = filepath;
@@ -19,6 +22,7 @@ function BusMallImage(filepath, name) {
   this.votes = 0;
   this.timesDisplayed = 0;
   BusMallImage.allBusMallImages.push(this);
+  imageNames.push(this.name);
 }
 
 
@@ -116,6 +120,7 @@ function randomItem() {
       showResults();
     } else {
       randomItem();
+      renderChart();
     }
   }  
   function showResults() {
@@ -125,6 +130,20 @@ function randomItem() {
       ulEl.appendChild(liEl);
     }
   }
+
+  // function to render the chart on the screen
+  function renderChart() {
+    var context = document.getElementById('chart-placeholder').getContext('2d');
+
+    var busMallChart = new Chart(context, {
+      type: 'bar',
+      data: {
+        labels: imageNames,
+
+      }
+    })
+  }
+
   sectionEl.addEventListener('click', handleClick);
   //APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
   // BusMallImage.lastDisplayed[0] = randomLeft;
