@@ -1,3 +1,7 @@
+h2 {
+  text-align: center;
+}
+
 #itemOnPageOne {
   width: 33%;
   float: left;
@@ -10,4 +14,3 @@
   width: 33%;
   float: left;
 }
-
