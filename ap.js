@@ -26,6 +26,7 @@ function BusMallImage(filepath, name) {
   this.timesDisplayed = 0;
   BusMallImage.allBusMallImages.push(this);
   imageNames.push(this.name);
+  saveImageVotes();
 }
 
 
@@ -106,8 +107,6 @@ function handleClick(event) {
   // to track the total number of clicks
   BusMallImage.totalClicks += 1;
   console.log('a click occurred');
-  storeVotesLocally();
-  console.log(storeVotesLocally);
 
   
   // count the clicks on a specific image
@@ -127,10 +126,23 @@ if(BusMallImage.totalClicks > 24) {
   randomItem();
 }
 } 
-
-function storeVotesLocally() {
-  localStorage.setItem('locallyStoredImageClickCount', JSON.stringify(BusMallImage.allBusMallImages));
+// save data to localstorage
+function saveImageVotes() {
+  var stringdImageVotes = JSON.stringify(imageVotes);
+  localStorage.setItem("imageVotes", stringdImageVotes);
 }
+
+// get data from local storage
+function getImageVotes() {
+  var stringdImageVotes = localStorage.getItem("imageVotes");
+  imageVotes = JSON.parse(stringdImageVotes);
+  console.log(imageVotes);
+
+  if (!getImageVotes) {
+    imageVotes = [];
+  }
+}
+getImageVotes();
 
 
 function showResults() {
