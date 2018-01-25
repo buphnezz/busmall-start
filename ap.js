@@ -26,7 +26,7 @@ function BusMallImage(filepath, name) {
   this.timesDisplayed = 0;
   BusMallImage.allBusMallImages.push(this);
   imageNames.push(this.name);
-  saveImageVotes();
+  
 }
 
 
@@ -120,26 +120,30 @@ function handleClick(event) {
 if(BusMallImage.totalClicks > 24) {
   sectionEl.removeEventListener('click', handleClick);
   showResults();
-  updateVotes();
+  // updateVotes();
   renderChart();
+  saveImageVotes();
 } else {
   randomItem();
+  
 }
 } 
 // save data to localstorage
 function saveImageVotes() {
-  var stringdImageVotes = JSON.stringify(imageVotes);
+  var stringdImageVotes = JSON.stringify(BusMallImage.allBusMallImages);
   localStorage.setItem("imageVotes", stringdImageVotes);
+  console.log(localStorage.BusMallImage.allBusMallImages);
+
 }
 
 // get data from local storage
 function getImageVotes() {
-  var stringdImageVotes = localStorage.getItem("imageVotes");
-  imageVotes = JSON.parse(stringdImageVotes);
-  console.log(imageVotes);
+  var stringdImageVotes = localStorage.getItem("BusMallImage.allBusMallImages");
+  BusMallImage.allBusMallImages = JSON.parse(stringdImageVotes);
+  console.log(BusMallImage.allBusMallImages);
 
   if (!getImageVotes) {
-    imageVotes = [];
+    BusMallImage.allBusMallImages = [];
   }
 }
 getImageVotes();
@@ -153,12 +157,12 @@ function showResults() {
   }
 }
 
-// function to update the number of votes per image
-function updateVotes() {
-  for(var i in BusMallImage.allBusMallImages) {
-    imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
-  }
-}
+// // function to update the number of votes per image
+// function updateVotes() {
+//   for(var i in BusMallImage.allBusMallImages) {
+//     imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
+//   }
+// }
 
 // function to render the chart on the screen
 function renderChart() {
