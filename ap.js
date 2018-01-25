@@ -130,8 +130,9 @@ if(BusMallImage.totalClicks > 24) {
 } 
 // save data to localstorage
 function saveImageVotes() {
-  var stringdImageVotes = JSON.stringify(BusMallImage.allBusMallImages);
-  localStorage.setItem("imageVotes", stringdImageVotes);
+  localStorage.imageVotes = imageVotes;
+  localStorage.imageNames = imageNames;
+  localStorage.("imageVotes", stringdImageVotes);
   console.log(localStorage.BusMallImage.allBusMallImages);
 
 }
