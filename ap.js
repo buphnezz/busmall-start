@@ -26,6 +26,7 @@ function BusMallImage(filepath, name) {
   this.timesDisplayed = 0;
   BusMallImage.allBusMallImages.push(this);
   imageNames.push(this.name);
+  
 }
 
 
@@ -86,19 +87,19 @@ function randomItem() {
   middleEl.alt = BusMallImage.allBusMallImages[randomMiddle].name;
   rightEl.src = BusMallImage.allBusMallImages[randomRight].filepath;
   rightEl.alt = BusMallImage.allBusMallImages[randomRight].name;
-
+  
   // increment the number of times each image was shown
   BusMallImage.allBusMallImages[randomLeft].timesDisplayed += 1;  
   BusMallImage.allBusMallImages[randomMiddle].timesDisplayed += 1;  
   BusMallImage.allBusMallImages[randomRight].timesDisplayed += 1;  
-
+  
   // keep track of these three as the previously displayed goats
   // APPROACH 1   the pushes accumulate and I have to clear them out
   BusMallImage.lastDisplayed = [];
   BusMallImage.lastDisplayed.push(randomLeft);
   BusMallImage.lastDisplayed.push(randomMiddle);
   BusMallImage.lastDisplayed.push(randomRight);
-//added this one manually!
+  //added this one manually!
 }
 
 // e is the same as event
@@ -106,6 +107,7 @@ function handleClick(event) {
   // to track the total number of clicks
   BusMallImage.totalClicks += 1;
   console.log('a click occurred');
+
   
   // count the clicks on a specific image
   // access with our for loop a specific image
@@ -115,15 +117,37 @@ function handleClick(event) {
     }
   }
   
-  if(BusMallImage.totalClicks > 24) {
-    sectionEl.removeEventListener('click', handleClick);
-    showResults();
-    updateVotes();
-    renderChart();
-  } else {
-    randomItem();
-  }
+if(BusMallImage.totalClicks > 24) {
+  sectionEl.removeEventListener('click', handleClick);
+  showResults();
+  // updateVotes();
+  renderChart();
+  saveImageVotes();
+} else {
+  randomItem();
+  
+}
 } 
+// save data to localstorage
+function saveImageVotes() {
+  var stringdImageVotes = JSON.stringify(BusMallImage.allBusMallImages);
+  localStorage.setItem("imageVotes", stringdImageVotes);
+  console.log(localStorage.BusMallImage.allBusMallImages);
+
+}
+
+// get data from local storage
+function getImageVotes() {
+  var stringdImageVotes = localStorage.getItem("BusMallImage.allBusMallImages");
+  BusMallImage.allBusMallImages = JSON.parse(stringdImageVotes);
+  console.log(BusMallImage.allBusMallImages);
+
+  if (!getImageVotes) {
+    BusMallImage.allBusMallImages = [];
+  }
+}
+getImageVotes();
+
 
 function showResults() {
   for(var i in BusMallImage.allBusMallImages) {
@@ -133,18 +157,18 @@ function showResults() {
   }
 }
 
-// function to update the number of votes per image
-function updateVotes() {
-  for(var i in BusMallImage.allBusMallImages) {
-    imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
-  }
-}
+// // function to update the number of votes per image
+// function updateVotes() {
+//   for(var i in BusMallImage.allBusMallImages) {
+//     imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
+//   }
+// }
 
 // function to render the chart on the screen
 function renderChart() {
   var context = document.getElementById('chart-placeholder').getContext('2d');
   console.log('found the barchart');
-
+  
   // add as many hex colors as I have pictures
   var chartColors = ['#E37222', '#DAF7A6', '#FFC300', '#C70039', '#33FFBD', '#33FF57', '#75FF33', '#DBFF33', '#5733FF', '#8F7A76', '#CF6650', '#ebf442', '#f44153', '#f207c7', '#d30610', '#71bc16', '#444740', '#1f0fd8', '#7c75ce', '#40a5aa', '#b003c6'];
   // refer to the barChart doc to see where my {} is out of place.
@@ -177,13 +201,13 @@ function renderChart() {
 // middleEl.addEventListener('click', randomItem);
 // rightEl.addEventListener('click', randomItem);
 
-  
 
-  // sectionEl.addEventListener('click', handleClick);
-  // APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
-  // BusMallImage.lastDisplayed[0] = randomLeft;
-  // BusMallImage.lastDisplayed[1] = randomMiddle;
-  // BusMallImage.lastDisplayed[2] = randomRight;
+
+// sectionEl.addEventListener('click', handleClick);
+// APPROACH 2 (BETTER BUT I DONT UNDERSTAND IT FULLY) the pushes just override themselves.
+// BusMallImage.lastDisplayed[0] = randomLeft;
+// BusMallImage.lastDisplayed[1] = randomMiddle;
+// BusMallImage.lastDisplayed[2] = randomRight;
 
 sectionEl.addEventListener('click', handleClick);
 // imgEl.addEventListener('click', handleClicks)
