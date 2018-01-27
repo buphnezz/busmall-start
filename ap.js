@@ -60,6 +60,7 @@ var rightEl = document.getElementById('itemOnPageThree');
 // callback function for the event listener to randomly display a busmall item
 function randomItem() {
   // random number generator to return a number betwen 0 and the length of the array
+  console.log(BusMallImage.allBusMallImages);
   var randomLeft = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
   var randomMiddle = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
   var randomRight = Math.floor(Math.random() * BusMallImage.allBusMallImages.length);
@@ -117,7 +118,7 @@ function handleClick(event) {
     }
   }
   
-if(BusMallImage.totalClicks > 24) {
+if(BusMallImage.totalClicks > 2) {
   sectionEl.removeEventListener('click', handleClick);
   showResults();
   // updateVotes();
@@ -132,19 +133,16 @@ if(BusMallImage.totalClicks > 24) {
 function saveImageVotes() {
   localStorage.imageVotes = imageVotes;
   localStorage.imageNames = imageNames;
-  localStorage.("imageVotes", stringdImageVotes);
-  console.log(localStorage.BusMallImage.allBusMallImages);
-
 }
 
 // get data from local storage
 function getImageVotes() {
-  var stringdImageVotes = localStorage.getItem("BusMallImage.allBusMallImages");
-  BusMallImage.allBusMallImages = JSON.parse(stringdImageVotes);
-  console.log(BusMallImage.allBusMallImages);
-
-  if (!getImageVotes) {
-    BusMallImage.allBusMallImages = [];
+  if(localStorage.imageVotes) {
+    console.log(true);
+    
+    var stringdImageVotes = localStorage.getItem("imageVotes");
+    BusMallImage.allBusMallImages = JSON.parse(stringdImageVotes);
+    console.log(BusMallImage.allBusMallImages);
   }
 }
 getImageVotes();
@@ -159,11 +157,11 @@ function showResults() {
 }
 
 // // function to update the number of votes per image
-// function updateVotes() {
-//   for(var i in BusMallImage.allBusMallImages) {
-//     imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
-//   }
-// }
+function updateVotes() {
+  for(var i in BusMallImage.allBusMallImages) {
+    imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
+  }
+}
 
 // function to render the chart on the screen
 function renderChart() {
