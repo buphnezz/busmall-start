@@ -26,11 +26,11 @@ function BusMallImage(filepath, name) {
   this.timesDisplayed = 0;
   BusMallImage.allBusMallImages.push(this);
   imageNames.push(this.name);
-  
 }
 
 
 // display images
+function instantiateNewImages() {
 new BusMallImage('img/bag.jpg', 'Bag');
 new BusMallImage('img/banana.jpg', 'Banana');
 new BusMallImage('img/bathroom.jpg', 'Bathroom');
@@ -51,7 +51,7 @@ new BusMallImage('img/unicorn.jpg', 'Unicorn');
 new BusMallImage('img/usb.gif', 'USB');
 new BusMallImage('img/water-can.jpg', 'Water-Can');
 new BusMallImage('img/wine-glass.jpg', 'Wine-Glass');
-
+};
 // access the img from the DOM
 var leftEl = document.getElementById('itemOnPageOne');
 var middleEl = document.getElementById('itemOnPageTwo');
@@ -122,8 +122,9 @@ if(BusMallImage.totalClicks > 24) {
   sectionEl.removeEventListener('click', handleClick);
   showResults();
   updateVotes();
+  console.log('did this stuff log', imageNames);
   renderChart();
-  // saveImageVotes();
+  saveImageVotes();
 } else {
   randomItem();
   
@@ -131,18 +132,21 @@ if(BusMallImage.totalClicks > 24) {
 } 
 // save data to localstorage
 function saveImageVotes() {
-  localStorage.imageVotes = JSON.stringify(imageVotes);
-  localStorage.imageNames = JSON.stringify(imageNames);
+  // localStorage.imageVotes = JSON.stringify(imageVotes);
+  // localStorage.imageNames = JSON.stringify(imageNames);
+  localStorage.imageNames = JSON.stringify(BusMallImage.allBusMallImages);
 }
 
 // get data from local storage
 function getImageVotes() {
-  if(localStorage.imageVotes) {
+  if(localStorage.imageNames) {
     console.log(true);
     
-    var stringdImageVotes = localStorage.getItem("imageVotes");
+    var stringdImageVotes = localStorage.getItem("imageNames");
     BusMallImage.allBusMallImages = JSON.parse(stringdImageVotes);
     console.log(BusMallImage.allBusMallImages);
+  } else {
+    instantiateNewImages();
   }
 }
 getImageVotes();
@@ -160,6 +164,7 @@ function showResults() {
 function updateVotes() {
   for(var i in BusMallImage.allBusMallImages) {
     imageVotes[i] = BusMallImage.allBusMallImages[i].votes;
+    imageNames[i] = BusMallImage.allBusMallImages[i].name;
   }
 }
 
@@ -212,6 +217,7 @@ sectionEl.addEventListener('click', handleClick);
 // imgEl.addEventListener('click', handleClicks)
 // invoke the callback on page load to show a random baby goat
 randomItem();
+
 
 
 // users should be able to select an image
