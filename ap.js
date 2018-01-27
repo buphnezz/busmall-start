@@ -118,12 +118,12 @@ function handleClick(event) {
     }
   }
   
-if(BusMallImage.totalClicks > 2) {
+if(BusMallImage.totalClicks > 24) {
   sectionEl.removeEventListener('click', handleClick);
   showResults();
-  // updateVotes();
+  updateVotes();
   renderChart();
-  saveImageVotes();
+  // saveImageVotes();
 } else {
   randomItem();
   
@@ -131,8 +131,8 @@ if(BusMallImage.totalClicks > 2) {
 } 
 // save data to localstorage
 function saveImageVotes() {
-  localStorage.imageVotes = imageVotes;
-  localStorage.imageNames = imageNames;
+  localStorage.imageVotes = JSON.stringify(imageVotes);
+  localStorage.imageNames = JSON.stringify(imageNames);
 }
 
 // get data from local storage
